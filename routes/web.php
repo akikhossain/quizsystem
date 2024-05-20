@@ -6,17 +6,12 @@ use App\Http\Controllers\Front\AuthController;
 use App\Http\Controllers\Front\FrontHomeController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('admin.app');
-// });
-// routes/web.php
-
-// Admin Routes
-Route::get('/', [FrontHomeController::class, 'home'])->name('home');
-// Route::get('/dashboard', [AdminQuizController::class, 'create'])->name('admin.create');
 
 // Front Routes
+Route::get('/', [FrontHomeController::class, 'home'])->name('home');
 
+
+// User authentication routes
 Route::group(['prefix' => 'account'], function () {
 
     Route::middleware(['guest'])->group(function () {
@@ -31,8 +26,9 @@ Route::group(['prefix' => 'account'], function () {
     });
 });
 
-Route::group(['prefix' => 'admin'], function () {
 
+// Admin Routes
+Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => 'admin.guest'], function () {
         Route::get('/login', [AdminLoginController::class, 'adminLogin'])->name('admin.login');
         Route::post('/authenticate', [AdminLoginController::class, 'authenticate'])->name('admin.authenticate');
@@ -40,6 +36,8 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['middleware' => 'admin.auth'], function () {
         Route::get('/dashboard', [AdminQuizController::class, 'create'])->name('admin.dashboard');
+        Route::post('/store', [AdminQuizController::class, 'store'])->name('admin.store');
+        Route::get('/list', [AdminQuizController::class, 'index'])->name('admin.list');
         Route::get('/logout', [AdminQuizController::class, 'logout'])->name('admin.logout');
     });
 });

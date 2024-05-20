@@ -32,102 +32,57 @@
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
-        <!-- Container wrapper -->
-        <div class="container-fluid">
-            <!-- Toggle button -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
 
-            <!-- Collapsible wrapper -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left links -->
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Games</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Projects</a>
-                    </li>
-                </ul>
-                <!-- Left links -->
-            </div>
-            <!-- Collapsible wrapper -->
+    @include('admin.partial.navbar')
 
-            <!-- Right elements -->
-            <div class="d-flex align-items-center">
-                <!-- Icon -->
-                <a class="text-reset me-3" href="#">
-                    <i class="fas fa-shopping-cart"></i>
-                </a>
-
-                <!-- Avatar -->
-                <div class="dropdown">
-                    <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
-                        id="navbarDropdownMenuAvatar" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25"
-                            alt="Black and White Portrait of a Man" loading="lazy" />
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
-                        <li>
-                            <a class="dropdown-item" href="#">My profile</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Settings</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('admin.logout') }}">Logout</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- Right elements -->
-        </div>
-        <!-- Container wrapper -->
-    </nav>
     <!-- Navbar -->
 
-    <main>
+    {{-- <main>
         <section>
-            <form action="" method="post" id="imageHandleForm" class="imageHandleForm">
+            <form action="{{ route('admin.store') }}" method="post" id="imageHandleForm" class="imageHandleForm"
+                enctype="multipart/form-data">
+                @csrf
                 <div class="container mt-5">
                     <div class="card mx-auto" style="max-width: 800px;">
                         <div class="card-body">
                             <h5 class="card-title text-center mb-4">Upload Images</h5>
-                            <form id="imageUploadForm">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <div class="image-preview" id="imagePreview1">500 x 500</div>
-                                        <label for="imageUpload1" class="btn btn-outline-secondary btn-block mt-2">
-                                            <i class="fas fa-camera"></i> Choose Image 1
-                                        </label>
-                                        <input type="file" name="image" class="image-input" id="imageUpload1"
-                                            accept="image/*">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <div class="image-preview" id="imagePreview2">500 x 500</div>
-                                        <label for="imageUpload2" class="btn btn-outline-secondary btn-block mt-2">
-                                            <i class="fas fa-camera"></i> Choose Image 2
-                                        </label>
-                                        <input type="file" name="image" class="image-input" id="imageUpload2"
-                                            accept="image/*">
-                                    </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="image-preview" id="imagePreview1">500 x 500</div>
+                                    <label for="imageUpload1" class="btn btn-outline-secondary btn-block mt-2">
+                                        <i class="fas fa-camera"></i> Choose Image 1
+                                    </label>
+                                    <input type="file" name="images[]" class="image-input" id="imageUpload1"
+                                        accept="image/*">
+                                    <p></p>
                                 </div>
-                                <button type="submit" class="btn btn-dark btn-block">UPLOAD IMAGES</button>
-                            </form>
+                                <div class="col-md-6 mb-3">
+                                    <div class="image-preview" id="imagePreview2">500 x 500</div>
+                                    <label for="imageUpload2" class="btn btn-outline-secondary btn-block mt-2">
+                                        <i class="fas fa-camera"></i> Choose Image 2
+                                    </label>
+                                    <input type="file" name="images[]" class="image-input" id="imageUpload2"
+                                        accept="image/*">
+                                    <p></p>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="deadline" class="form-label">Quiz Deadline</label>
+                                    <input type="datetime-local" name="deadline" class="form-control" id="deadline">
+                                    <p></p>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-dark btn-block">UPLOAD IMAGES</button>
                         </div>
                     </div>
                 </div>
             </form>
         </section>
-    </main>
+    </main> --}}
+    @yield('content')
+
+    @include('admin.partial.footer')
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
@@ -137,30 +92,57 @@
     </script>
 
     <script>
-        document.getElementById('imageUpload1').addEventListener('change', function () {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                document.getElementById('imagePreview1').style.backgroundImage = `url(${e.target.result})`;
-                document.getElementById('imagePreview1').innerHTML = '';
-            }
-            reader.readAsDataURL(file);
-        }
-    });
+        document.getElementById('imageUpload1').addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('imagePreview1').style.backgroundImage = `url(${e.target.result})`;
+                        document.getElementById('imagePreview1').innerHTML = '';
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
 
-    document.getElementById('imageUpload2').addEventListener('change', function () {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                document.getElementById('imagePreview2').style.backgroundImage = `url(${e.target.result})`;
-                document.getElementById('imagePreview2').innerHTML = '';
-            }
-            reader.readAsDataURL(file);
-        }
-    });
+            document.getElementById('imageUpload2').addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('imagePreview2').style.backgroundImage = `url(${e.target.result})`;
+                        document.getElementById('imagePreview2').innerHTML = '';
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            $("#imageHandleForm").submit(function(event) {
+                event.preventDefault();
+                var element = $(this);
+
+                $("button[type=submit]").prop('disabled', true);
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: '{{ route('admin.store') }}',
+                    type: 'post',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        $("button[type=submit]").prop('disabled', false);
+                        if (response['status'] == true) {
+                            window.location.href = "{{ route('admin.list') }}";
+                        }
+                    },
+                    error: function(jqXHR, exception) {
+                        console.log("Something went wrong");
+                    }
+                });
+            });
     </script>
+    @yield('customJs')
 </body>
 
 </html>
