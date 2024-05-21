@@ -15,14 +15,17 @@
 <body>
     @include('admin.partial.navbar')
     <div class="container">
-        <h2>Quiz List</h2>
+        @include('front.message')
+        <h2 class="my-4">Quiz List</h2>
         <table class="table table-bordered" id="quizDataTable">
             <thead>
                 <tr>
                     <th>Id</th>
+                    <th>Date</th>
                     <th>Image 1</th>
                     <th>Image 2</th>
                     <th>Deadline</th>
+                    <th>Action</th>
                 </tr>
             </thead>
         </table>
@@ -40,10 +43,13 @@
                 ajax: "{{ url('admin/list') }}",
                 columns: [
                     { data: 'id', name: 'id' },
+                    { data: 'current_date', name: 'current_date' },
                     { data: 'image1', name: 'image1', orderable: false, searchable: false },
                     { data: 'image2', name: 'image2', orderable: false, searchable: false },
-                    { data: 'deadline', name: 'deadline' }
-                ]
+                    { data: 'deadline', name: 'deadline' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false }
+                ],
+                pageLength: 4
             });
         });
     </script>

@@ -25,10 +25,7 @@ class AdminQuizController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => $validator->errors()
-            ]);
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $imagePaths = [];
@@ -45,10 +42,7 @@ class AdminQuizController extends Controller
         $quiz->save();
 
         session()->flash('success', 'Quiz created successfully');
-        return response()->json([
-            'status' => true,
-            'message' => 'Quiz created successfully'
-        ]);
+        return redirect()->route('admin.list');
     }
 
     // public function show(Quiz $quiz)
@@ -68,7 +62,18 @@ class AdminQuizController extends Controller
                 ->editColumn('image2', function ($quiz) {
                     return '<img src="' . asset($quiz->image2) . '" width="100" height="100">';
                 })
-                ->rawColumns(['image1', 'image2'])
+                ->editColumn('deadline', function ($quiz) {
+                    return \Carbon\Carbon::parse($quiz->deadline)->format('d M, Y');
+                })
+                ->addColumn('current_date', function () {
+                    return \Carbon\Carbon::now()->format('d M, Y');
+                })
+                ->addColumn('action', function ($quiz) {
+                    return '<a href="#" class="btn btn-primary btn-sm">View Answer</a>
+                            <a href="#" class="btn btn-success btn-sm">Import</a>
+                            <a href="#" class="btn btn-warning btn-sm">Export</a>';
+                })
+                ->rawColumns(['image1', 'image2', 'action'])
                 ->make(true);
         }
 

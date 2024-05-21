@@ -22,6 +22,7 @@ Route::group(['prefix' => 'account'], function () {
     });
     Route::middleware(['auth'])->group(function () {
         Route::get('/profile', [AuthController::class, 'profile'])->name('account.profile');
+        Route::post('/submit-quiz', [FrontHomeController::class, 'submitQuiz'])->name('submit.quiz');
         Route::get('/logout', [AuthController::class, 'logout'])->name('account.logout');
     });
 });

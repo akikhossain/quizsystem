@@ -49,6 +49,16 @@
     <!-- Fav Icon -->
     <link rel="shortcut icon" type="image/x-icon" href="#" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <style>
+        .answer-group {
+            display: none;
+        }
+
+        .answer-group.active {
+            display: block;
+        }
+    </style>
 </head>
 
 <body data-instant-intensity="mousedown">
@@ -140,6 +150,7 @@
     <script src="{{ asset('front-assets/js/slick.min.js') }}"></script>
     <script src="{{ asset('front-assets/js/custom.js') }}"></script>
     <script src="{{ asset('front-assets/plugins/dropzone/min/dropzone.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script type="text/javascript">
         $.ajaxSetup({
