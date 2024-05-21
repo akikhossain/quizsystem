@@ -9,14 +9,30 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css"
         rel="stylesheet">
-    <title>Quiz List</title>
+    <title>ImageInEveryWhere</title>
 </head>
 
 <body>
     @include('admin.partial.navbar')
     <div class="container">
         @include('front.message')
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+
+        @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
         <h2 class="my-4">Quiz List</h2>
+        {{-- <a href="" class="my-4 btn btn-info">All Answer</a> --}}
         <table class="table table-bordered" id="quizDataTable">
             <thead>
                 <tr>
@@ -30,8 +46,6 @@
             </thead>
         </table>
     </div>
-
-
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>

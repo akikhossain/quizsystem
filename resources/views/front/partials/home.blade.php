@@ -46,8 +46,26 @@
         <div class="section-title">
             <h2>Featured Quizes</h2>
         </div>
+        <div class="section-title">
+            <a href="{{ route('quiz.results') }}">See the Result</a>
+        </div>
         <div class="row pb-3">
             <div class="container w-50 mx-auto mt-5">
+                @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+                @endif
+
+                @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 @if($quizzes->isNotEmpty())
                 @foreach($quizzes as $quiz)
                 <div class="card mb-4">

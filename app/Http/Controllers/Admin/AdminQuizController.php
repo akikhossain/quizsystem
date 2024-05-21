@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Answer;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,12 +45,6 @@ class AdminQuizController extends Controller
         session()->flash('success', 'Quiz created successfully');
         return redirect()->route('admin.list');
     }
-
-    // public function show(Quiz $quiz)
-    // {
-    //     $answers = $quiz->answers()->with('user')->get();
-    //     return view('admin.quizzes.show', compact('quiz', 'answers'));
-    // }
 
     public function index(Request $request)
     {
