@@ -65,7 +65,14 @@
                 ],
                 pageLength: 4
             });
+
+            $('#quizDataTable').on('click', '.view-answer-btn', function (e) {
+            e.preventDefault();
+            var quizId = $(this).data('quiz-id');
+            window.location.href = "{{ url('admin/view-answer') }}/" + quizId;
         });
+        });
+
     </script>
 </body>
 

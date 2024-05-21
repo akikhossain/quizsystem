@@ -41,6 +41,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/dashboard', [AdminQuizController::class, 'create'])->name('admin.dashboard');
         Route::post('/store', [AdminQuizController::class, 'store'])->name('admin.store');
         Route::get('/list', [AdminQuizController::class, 'index'])->name('admin.list');
+        Route::get('admin/quiz-result/{quizId}', [AdminQuizController::class, 'quizResult'])->name('admin.quiz-result');
         Route::get('/logout', [AdminQuizController::class, 'logout'])->name('admin.logout');
     });
 });

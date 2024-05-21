@@ -64,16 +64,30 @@ class AdminQuizController extends Controller
                     return \Carbon\Carbon::now()->format('d M, Y');
                 })
                 ->addColumn('action', function ($quiz) {
-                    return '<a href="#" class="btn btn-primary btn-sm">View Answer</a>
+                    return '<a href="' . route('admin.quiz-result', $quiz->id) . '" class="btn btn-primary btn-sm">View Answer</a>
                             <a href="#" class="btn btn-success btn-sm">Import</a>
                             <a href="#" class="btn btn-warning btn-sm">Export</a>';
                 })
+
+
                 ->rawColumns(['image1', 'image2', 'action'])
                 ->make(true);
         }
 
         return view('admin.list');
     }
+
+    public function quizResult($quizId)
+    {
+        // Retrieve the quiz and its answers
+        $quiz = Quiz::findOrFail($quizId);
+        $answers = Answer::where('quiz_id', $quizId)->with('user')->get();
+
+        // Pass the quiz, answers, and user names to the view
+        return view('admin.quiz-answer', compact('quiz', 'answers'));
+    }
+
+
 
 
     public function logout()
