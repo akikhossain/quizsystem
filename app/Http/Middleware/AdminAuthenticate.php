@@ -39,7 +39,6 @@ class AdminAuthenticate
             return $next($request);
         }
 
-        // Redirect or return a response if the user is not authenticated
-        return redirect()->route('admin.login'); // or return response()->json(['error' => 'Unauthorized'], 401);
+        return redirect()->route('admin.login');
     }
 }

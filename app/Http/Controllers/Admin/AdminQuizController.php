@@ -79,15 +79,27 @@ class AdminQuizController extends Controller
 
     public function quizResult($quizId)
     {
-        // Retrieve the quiz and its answers
-        $quiz = Quiz::findOrFail($quizId);
-        $answers = Answer::where('quiz_id', $quizId)->with('user')->get();
 
-        // Pass the quiz, answers, and user names to the view
+        $quiz = Quiz::findOrFail($quizId);
+        $answers = Answer::where('quiz_id', $quizId)->with('user')->paginate(4);
+
         return view('admin.quiz-answer', compact('quiz', 'answers'));
     }
 
 
+    public function quizBestAnswers($quizId)
+    {
+        $quiz = Quiz::findOrFail($quizId);
+
+        // Get the answers along with their counts, grouped by the answer text
+        $bestAnswers = Answer::where('quiz_id', $quizId)
+            ->select('answer', \DB::raw('count(*) as total'))
+            ->groupBy('answer')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        return view('admin.quiz-best-answers', compact('quiz', 'bestAnswers'));
+    }
 
 
     public function logout()

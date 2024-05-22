@@ -8,6 +8,7 @@ use App\Models\Quiz;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class FrontHomeController extends Controller
 {
@@ -20,23 +21,19 @@ class FrontHomeController extends Controller
 
     public function submitQuiz(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect()->route('account.login');
+        }
 
         $user = Auth::user();
-
         $dailySubmissions = Answer::where('user_id', $user->id)
+            ->where('quiz_id', $request->quiz_id)
             ->whereDate('created_at', today())
             ->count();
 
-        if ($dailySubmissions >= 5) {
-            return redirect()->back()->with('error', 'You have reached the maximum daily submission limit.');
+        if ($dailySubmissions >= 1) {
+            return redirect()->back()->with('error', 'You have already submitted answers for this quiz today.');
         }
-
-        $quiz = Quiz::findOrFail($request->quiz_id);
-
-        if (!$quiz->isSubmissionPeriodActive()) {
-            return redirect()->back()->with('error', 'Submission period for this quiz has ended.');
-        }
-
 
         $rules = [
             'username' => 'required|string|max:255',
@@ -68,15 +65,9 @@ class FrontHomeController extends Controller
         return redirect()->back()->with('success', 'Your answers have been submitted successfully.');
     }
 
-    // public function listUserAnswers()
-    // {
-    //     $quizAnswers = Answer::with('quiz', 'user')->get();
-    //     return view('front.partials.answers_list', compact('quizAnswers'));
-    // }
 
     public function quizResults()
     {
-        // Get quizzes that have answers
         $quizzes = Quiz::has('answers')->with('answers.user')->get();
 
         return view('front.account.result', compact('quizzes'));

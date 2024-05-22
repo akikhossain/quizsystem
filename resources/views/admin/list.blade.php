@@ -15,7 +15,6 @@
 <body>
     @include('admin.partial.navbar')
     <div class="container">
-        @include('front.message')
         @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}

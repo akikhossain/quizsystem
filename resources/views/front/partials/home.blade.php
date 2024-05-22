@@ -9,7 +9,7 @@
             <div class="col-lg-3">
                 <div class="box shadow-lg">
                     <i class="fa icon fa-regular fa-pen-to-square text-primary m-0 mr-3"></i>
-                    <h2 class="font-weight-semi-bold m-0">Create Posts</h2>
+                    <h2 class="font-weight-semi-bold m-0">Daily Quiz</h2>
                 </div>
             </div>
             <div class="col-lg-3">
